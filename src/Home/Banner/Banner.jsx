@@ -6,15 +6,15 @@ const Banner = () => {
   return (
     <div className="relative w-full  ">
       {/* Container */}
-      <div className=" mx-auto flex flex-col md:flex-row items-center justify-between px-6  gap-10">
+      <div className=" mx-auto flex flex-col md:flex-row items-center justify-between px-6  py-10 lg:py-0 gap-10">
         {/* Left Side Text */}
         <div className="flex-1 space-y-6 text-center md:text-left">
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
             Welcome to <span className="text-[#0fb894]">Rentra</span>
           </h1>
           <p className="text-lg md:text-xl opacity-90">
-            Your one-stop marketplace for{" "}
-            <span className="font-semibold">errands</span> and{" "}
+            Your one-stop marketplace for
+            <span className="font-semibold">errands</span> and
             <span className="font-semibold">peer-to-peer rentals</span>. Post a
             task or rent an item — simple, fast, and secure.
           </p>
