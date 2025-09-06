@@ -1,12 +1,11 @@
 import React from "react";
 import { Briefcase, Package, Car, Camera } from "lucide-react";
+import SectionTitle from "../../Shared/SectionTitle/SectionTitle";
 
 const Category = () => {
   return (
     <div className="my-4 mx-auto px-6 ">
-      {/* Section Title */}
-      <h2 className="text-3xl font-bold text-center mb-10">Explore Categories</h2>
-
+        <SectionTitle title={"Explore Categories"}></SectionTitle>
       {/* Category Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {/* Category Card 1 */}
