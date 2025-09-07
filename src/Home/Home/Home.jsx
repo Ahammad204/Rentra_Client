@@ -4,6 +4,7 @@ import Category from '../Category/Category';
 import FeaturedSection from '../FeaturedSection/FeaturedSection';
 import Review from '../Review/Review';
 import CallToAction from '../CallToAction/CallToAction';
+import ContactUs from '../ContactUs/ContactUs';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
            <FeaturedSection></FeaturedSection>
            <Review></Review>
            <CallToAction></CallToAction>
+           <ContactUs></ContactUs>
         </>
     );
 };
