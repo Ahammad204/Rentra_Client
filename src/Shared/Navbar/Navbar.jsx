@@ -64,7 +64,7 @@ const Navbar = () => {
         {user ? (
           <div className="relative">
             <img
-              src={user?.photoURL || "https://i.ibb.co/7zT7Qp1/user.png"}
+              src={user?.avatar || "https://i.ibb.co/7zT7Qp1/user.png"}
               alt="profile"
               className="w-10 h-10 rounded-full cursor-pointer border"
               onClick={() => setOpenMenu(!openMenu)}
@@ -91,7 +91,7 @@ const Navbar = () => {
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="btn btn-sm btn-error w-full"
+                      className="btn btn-sm btn-error w-full text-white"
                     >
                       Logout
                     </button>
