@@ -1,7 +1,6 @@
 import useAuth from "@/Hooks/useAuth";
 import { FaHandHoldingMedical, FaHome } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
 
 
 const Dashboard = () => {
@@ -84,16 +83,11 @@ const Dashboard = () => {
             </NavLink>
           </li>
 
+          
           <li>
-            <NavLink to="/dashboard/profile">
-              <CgProfile />
-              Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/dashboard/create-donation-request">
+            <NavLink to="/dashboard/createTask">
               <FaHandHoldingMedical />
-              Create donation request
+              Create Service
             </NavLink>
           </li>
           <li>

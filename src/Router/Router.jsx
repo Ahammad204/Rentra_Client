@@ -5,6 +5,8 @@ import Register from "@/Shared/Register/Register";
 import Login from "@/Shared/Login/Login";
 import Dashboard from "@/Dashboard/Dashboard/Dashboard";
 import UserProfile from "@/Dashboard/UserProfile/UserProfile";
+import PrivateRoute from "./PrivateRoute";
+import CreateService from "@/Dashboard/CreateService/CreateService";
 
 export const router = createBrowserRouter([
   {
@@ -24,11 +26,14 @@ export const router = createBrowserRouter([
     ]
   },{
     path:"/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children:[
       {
         path:"/dashboard",
-        element:<UserProfile></UserProfile>
+        element:<PrivateRoute><UserProfile></UserProfile></PrivateRoute>
+      },{
+        path:"/dashboard/createTask",
+        element: <PrivateRoute><CreateService></CreateService></PrivateRoute>
       }
     ]
   }
