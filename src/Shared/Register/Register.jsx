@@ -5,9 +5,8 @@ import Lottie from "lottie-react";
 import { Link, useNavigate } from "react-router-dom";
 import registerAnimation from "../../assets/Login.json";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../Hooks/useAuth";
-import axiosPublic from "@/utils/axiosPublic";
+
 
 const Register = () => {
   const { register } = useAuth();

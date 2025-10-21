@@ -9,6 +9,22 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+   // 🔁 Fetch user (reusable)
+  const fetchUser = async () => {
+    try {
+      const res = await axiosPublic.get("/api/me", {
+        withCredentials: true,
+      });
+      setUser(res.data.user);
+      return res.data.user;
+    } catch (err) {
+      setUser(null);
+      console.error("Failed to fetch user:", err);
+      return null;
+    }
+  };
+
+
   //  Register
   const register = async (userData) => {
     try {
@@ -77,11 +93,17 @@ const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
+    // 🧠 Check auth on refresh
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   const authValues = {
     user,
     register,
     login,
     logout,
+    fetchUser,
     loading,
   };
 

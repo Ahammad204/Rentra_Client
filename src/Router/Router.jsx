@@ -3,6 +3,8 @@ import Main from "../Main/Main";
 import Home from "../Home/Home/Home";
 import Register from "@/Shared/Register/Register";
 import Login from "@/Shared/Login/Login";
+import Dashboard from "@/Dashboard/Dashboard/Dashboard";
+import UserProfile from "@/Dashboard/UserProfile/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -20,5 +22,14 @@ export const router = createBrowserRouter([
           element: <Login></Login>
         }
     ]
-  },
+  },{
+    path:"/dashboard",
+    element: <Dashboard></Dashboard>,
+    children:[
+      {
+        path:"/dashboard",
+        element:<UserProfile></UserProfile>
+      }
+    ]
+  }
 ]);
