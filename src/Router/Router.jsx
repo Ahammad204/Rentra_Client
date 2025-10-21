@@ -7,6 +7,7 @@ import Dashboard from "@/Dashboard/Dashboard/Dashboard";
 import UserProfile from "@/Dashboard/UserProfile/UserProfile";
 import PrivateRoute from "./PrivateRoute";
 import CreateService from "@/Dashboard/CreateService/CreateService";
+import CreateServiceRequest from "@/Dashboard/CreateServiceRequest/CreateServiceRequest";
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,9 @@ export const router = createBrowserRouter([
       },{
         path:"/dashboard/createTask",
         element: <PrivateRoute><CreateService></CreateService></PrivateRoute>
+      },{
+        path:"/dashboard/serviceRequest",
+        element: <PrivateRoute><CreateServiceRequest></CreateServiceRequest></PrivateRoute>
       }
     ]
   }
