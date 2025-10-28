@@ -15,6 +15,7 @@ import MyItemRental from "@/Dashboard/MyItemRental/MyItemRental";
 import AdminRoute from "./AdminRoute";
 import AllUsers from "@/Dashboard/AllUsers/AllUsers";
 import AllService from "@/Dashboard/AllService/AllService";
+import AllServicesRequest from "@/Dashboard/AllServicesRequest/AllServicesRequest";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
       ,{
         path:"/dashboard/allService",
         element: <PrivateRoute><AdminRoute><AllService></AllService></AdminRoute></PrivateRoute>
+      }
+      ,{
+        path:"/dashboard/allServiceRequest",
+        element: <PrivateRoute><AdminRoute><AllServicesRequest></AllServicesRequest></AdminRoute></PrivateRoute>
       }
     ]
   }
