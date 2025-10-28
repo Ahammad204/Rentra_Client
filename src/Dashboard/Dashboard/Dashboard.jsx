@@ -21,7 +21,7 @@ const [isAdmin, isAdminLoading] = useAdmin();
         <ul className="menu p-4">
           {isAdmin ? (
             <>
-               <li ><NavLink className=" mb-3 flex justify-center text-center w-full"  to="/dashboard/admin">Admin Home</NavLink></li>
+               <li ><NavLink className=" mb-3 flex justify-center text-center w-full">Admin Home</NavLink></li>
               <hr />
               <li>
                 <NavLink to="/dashboard/users">
@@ -39,6 +39,12 @@ const [isAdmin, isAdminLoading] = useAdmin();
                 <NavLink to="/dashboard/allServiceRequest">
                   <FaUsers></FaUsers>
                   All Services Request
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/allRentItems">
+                  <FaUsers></FaUsers>
+                  All Rent Items
                 </NavLink>
               </li>
             

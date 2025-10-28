@@ -16,6 +16,7 @@ import AdminRoute from "./AdminRoute";
 import AllUsers from "@/Dashboard/AllUsers/AllUsers";
 import AllService from "@/Dashboard/AllService/AllService";
 import AllServicesRequest from "@/Dashboard/AllServicesRequest/AllServicesRequest";
+import AllRentItem from "@/Dashboard/AllRentItem/AllRentItem";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
       ,{
         path:"/dashboard/allServiceRequest",
         element: <PrivateRoute><AdminRoute><AllServicesRequest></AllServicesRequest></AdminRoute></PrivateRoute>
+      }
+      ,{
+        path:"/dashboard/allRentItems",
+        element: <PrivateRoute><AdminRoute><AllRentItem></AllRentItem></AdminRoute></PrivateRoute>
       }
     ]
   }

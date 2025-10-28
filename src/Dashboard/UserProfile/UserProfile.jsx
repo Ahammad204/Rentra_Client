@@ -6,9 +6,11 @@ import axios from "axios";
 import axiosPublic from "@/utils/axiosPublic";
 import { Edit3, CheckCircle, XCircle, Star } from "lucide-react";
 import Rating from "react-rating";
+import useAdmin from "@/Hooks/useAdmin";
 
 const UserProfile = () => {
   const { user } = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +18,7 @@ const UserProfile = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [selectedDistrictId, setSelectedDistrictId] = useState("");
 
-   const [avgRating, setAvgRating] = useState(0); 
+  const [avgRating, setAvgRating] = useState(0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -43,7 +45,9 @@ const UserProfile = () => {
     fetch(`${import.meta.env.VITE_API_BASE_URL}/geocode/upazilas`)
       .then((res) => res.json())
       .then((data) => {
-        const filtered = data.filter((u) => u.district_id === selectedDistrictId);
+        const filtered = data.filter(
+          (u) => u.district_id === selectedDistrictId
+        );
         setUpazilas(filtered);
       })
       .catch((err) => console.error("Error fetching upazilas:", err));
@@ -60,7 +64,9 @@ const UserProfile = () => {
         upazila: user.address?.upazila || "",
         avatar: user.avatarUrl || user.avatar || "",
       });
-      const selectedDistrict = districts.find((d) => d.name === user.address?.district);
+      const selectedDistrict = districts.find(
+        (d) => d.name === user.address?.district
+      );
       if (selectedDistrict) setSelectedDistrictId(selectedDistrict.id);
       //    // Fetch user's average rating
       // axiosPublic
@@ -68,7 +74,6 @@ const UserProfile = () => {
       //   .then((res) => setAvgRating(res.data.avgRating || 0))
       //   .catch((err) => console.error("Rating fetch error:", err));
       setAvgRating(user?.ratingAvg);
-    
     }
   }, [user, districts]);
 
@@ -118,7 +123,10 @@ const UserProfile = () => {
         },
       };
 
-      const res = await axiosPublic.patch(`/api/users/${user?.email}`, updatedUser);
+      const res = await axiosPublic.patch(
+        `/api/users/${user?.email}`,
+        updatedUser
+      );
       if (res.status === 200) {
         toast.success("Profile updated successfully!");
         setIsEditing(false);
@@ -136,11 +144,33 @@ const UserProfile = () => {
       <div className="relative bg-gradient-to-r from-blue-500 to-teal-400 h-36 flex items-center justify-center">
         <div className="absolute -bottom-14">
           <div className="relative">
-            <img
-              src={formData.avatar || "https://via.placeholder.com/150"}
-              alt="User"
-              className="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg"
-            />
+            <div className="flex flex-col items-center">
+              <img
+                src={formData.avatar || "https://via.placeholder.com/150"}
+                alt="User"
+                className={`w-28 h-28 rounded-full object-cover shadow-lg border-4 ${
+                  isAdmin ? "border-yellow-400" : "border-white"
+                }`}
+              />
+
+              {/* Admin label */}
+              {isAdmin && (
+                <span className="mt-2 px-3 py-1 text-sm font-semibold text-yellow-800 bg-yellow-200 rounded-full shadow-sm">
+                  Admin
+                </span>
+              )}
+
+              {isEditing && (
+                <input
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="absolute inset-0 opacity-0 cursor-pointer rounded-full"
+                />
+              )}
+            </div>
+
             {isEditing && (
               <input
                 type="file"
@@ -224,7 +254,9 @@ const UserProfile = () => {
                 value={formData.district}
                 onChange={(e) => {
                   handleChange(e);
-                  const selected = districts.find((d) => d.name === e.target.value);
+                  const selected = districts.find(
+                    (d) => d.name === e.target.value
+                  );
                   setSelectedDistrictId(selected?.id || "");
                 }}
                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
@@ -275,7 +307,13 @@ const UserProfile = () => {
             disabled={loading}
             className="mt-6 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-medium py-2 rounded-lg transition-all disabled:opacity-70"
           >
-            {loading ? "Saving..." : <><CheckCircle className="w-4 h-4" /> Save Changes</>}
+            {loading ? (
+              "Saving..."
+            ) : (
+              <>
+                <CheckCircle className="w-4 h-4" /> Save Changes
+              </>
+            )}
           </button>
         )}
       </div>
