@@ -4,7 +4,8 @@ import useAuth from "@/Hooks/useAuth";
 import toast from "react-hot-toast";
 import axios from "axios";
 import axiosPublic from "@/utils/axiosPublic";
-import { Edit3, CheckCircle, XCircle } from "lucide-react";
+import { Edit3, CheckCircle, XCircle, Star } from "lucide-react";
+import Rating from "react-rating";
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -14,6 +15,8 @@ const UserProfile = () => {
   const [districts, setDistricts] = useState([]);
   const [upazilas, setUpazilas] = useState([]);
   const [selectedDistrictId, setSelectedDistrictId] = useState("");
+
+   const [avgRating, setAvgRating] = useState(0); 
 
   const [formData, setFormData] = useState({
     name: "",
@@ -59,6 +62,13 @@ const UserProfile = () => {
       });
       const selectedDistrict = districts.find((d) => d.name === user.address?.district);
       if (selectedDistrict) setSelectedDistrictId(selectedDistrict.id);
+      //    // Fetch user's average rating
+      // axiosPublic
+      //   .get(`/api/users/${user.email}/rating`)
+      //   .then((res) => setAvgRating(res.data.avgRating || 0))
+      //   .catch((err) => console.error("Rating fetch error:", err));
+      setAvgRating(user?.ratingAvg);
+    
     }
   }, [user, districts]);
 
@@ -170,6 +180,19 @@ const UserProfile = () => {
           <h2 className="text-2xl font-bold text-gray-800">{formData.name}</h2>
         )}
         <p className="text-gray-500 text-sm">{user?.email}</p>
+
+        {/* ⭐ Average Rating */}
+        <div className="flex justify-center items-center gap-2 mt-2">
+          <Rating
+            readonly
+            initialRating={avgRating}
+            emptySymbol={<Star className="w-5 h-5 text-gray-300" />}
+            fullSymbol={<Star className="w-5 h-5 text-yellow-400" />}
+          />
+          <span className="text-sm text-gray-600 font-medium">
+            {avgRating ? avgRating.toFixed(1) : "0.0"}
+          </span>
+        </div>
 
         {/* Details */}
         <div className="mt-6 space-y-3 text-left">
