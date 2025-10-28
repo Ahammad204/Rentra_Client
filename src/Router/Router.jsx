@@ -17,6 +17,8 @@ import AllUsers from "@/Dashboard/AllUsers/AllUsers";
 import AllService from "@/Dashboard/AllService/AllService";
 import AllServicesRequest from "@/Dashboard/AllServicesRequest/AllServicesRequest";
 import AllRentItem from "@/Dashboard/AllRentItem/AllRentItem";
+import AllJobs from "@/pages/AllJobs/AllJobs";
+import AllJobsDetails from "@/pages/AllJobsDetails/AllJobsDetails";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +34,13 @@ export const router = createBrowserRouter([
         },{
           path:"/login",
           element: <Login></Login>
+        }
+        ,{
+          path:"/allJobs",
+          element: <AllJobs></AllJobs>
+        },{
+          path: "/service-details/:id",
+          element: <AllJobsDetails></AllJobsDetails>
         }
     ]
   },{

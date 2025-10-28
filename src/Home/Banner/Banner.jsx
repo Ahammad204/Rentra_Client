@@ -1,6 +1,7 @@
 import React from "react";
 import Lottie from "lottie-react";
 import animationData from "../../assets/hero.json";
+import { NavLink } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -19,9 +20,9 @@ const Banner = () => {
             task or rent an item — simple, fast, and secure.
           </p>
           <div className="flex gap-4 justify-center md:justify-start">
-            <button className="px-6 py-3 bg-[#0fb894] text-white font-semibold
+            <button  className="px-6 py-3 bg-[#0fb894] text-white font-semibold
              rounded-2xl shadow-md cursor-pointer transition">
-              Get Started
+              <NavLink to="/register">Get Started</NavLink>
             </button>
             <button className="px-6 py-3 border border-white font-semibold rounded-2xl hover:bg-white  transition">
               Learn More
