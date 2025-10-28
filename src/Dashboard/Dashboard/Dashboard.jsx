@@ -29,6 +29,12 @@ const [isAdmin, isAdminLoading] = useAdmin();
                   All Users
                 </NavLink>
               </li>
+              <li>
+                <NavLink to="/dashboard/allService">
+                  <FaUsers></FaUsers>
+                  All Services 
+                </NavLink>
+              </li>
             
               <div className="divider"></div>
             </>
