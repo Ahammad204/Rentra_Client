@@ -3,128 +3,139 @@ import axiosPublic from "@/utils/axiosPublic";
 import toast from "react-hot-toast";
 import useAuth from "@/Hooks/useAuth";
 
-const MyServiceRequest = () => {
+const MyItemRental = () => {
   const { user } = useAuth();
-  const [requests, setRequests] = useState([]);
+  const [rents, setRents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editingRequest, setEditingRequest] = useState(null);
+  const [editingRent, setEditingRent] = useState(null);
   const [editForm, setEditForm] = useState({
+    itemName: "",
     description: "",
-    urgency: "",
+    rentPrice: "",
   });
 
-  //  Fetch user's requests
+  // 🔹 Fetch user's rents
   useEffect(() => {
-    const fetchRequests = async () => {
+    const fetchRents = async () => {
       try {
-        const res = await axiosPublic.get("/api/my-requests", {
+        const res = await axiosPublic.get("/api/my-rents", {
           withCredentials: true,
         });
-        setRequests(res.data);
+        setRents(res.data);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to load your requests");
+        toast.error("Failed to load your rent posts");
       } finally {
         setLoading(false);
       }
     };
-    if (user?._id) fetchRequests();
+
+    if (user?._id) fetchRents();
   }, [user?._id]);
 
-  //  Handle delete request
+  // 🔹 Delete rent
   const handleDelete = async (id) => {
-    if (!confirm("Are you sure you want to delete this request?")) return;
+    if (!confirm("Are you sure you want to delete this rental post?")) return;
     try {
-      const res = await axiosPublic.delete(`/api/requests/${id}`, {
+      const res = await axiosPublic.delete(`/api/rents/${id}`, {
         withCredentials: true,
       });
       if (res.status === 200) {
-        toast.success("Request deleted successfully");
-        setRequests((prev) => prev.filter((req) => req._id !== id));
+        toast.success("Rent post deleted successfully");
+        setRents((prev) => prev.filter((r) => r._id !== id));
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to delete request");
+      toast.error("Failed to delete post");
     }
   };
 
-  // Open edit mode
-  const handleEditClick = (req) => {
-    setEditingRequest(req._id);
+  // 🔹 Open edit mode
+  const handleEditClick = (rent) => {
+    setEditingRent(rent._id);
     setEditForm({
-      description: req.description,
-      urgency: req.urgency,
+      itemName: rent.itemName,
+      description: rent.description,
+      rentPrice: rent.rentPrice,
     });
   };
 
-  //  Handle form input change
+  // 🔹 Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  //  Save edit
+  // 🔹 Save edited rent
   const handleSaveEdit = async (id) => {
     try {
-      const res = await axiosPublic.patch(`/api/requests/${id}`, editForm, {
+      const res = await axiosPublic.patch(`/api/rents/${id}`, editForm, {
         withCredentials: true,
       });
       if (res.status === 200) {
-        toast.success("Request updated successfully");
-        setRequests((prev) =>
-          prev.map((r) =>
-            r._id === id ? { ...r, ...editForm } : r
-          )
+        toast.success("Rent post updated successfully");
+        setRents((prev) =>
+          prev.map((r) => (r._id === id ? { ...r, ...editForm } : r))
         );
-        setEditingRequest(null);
+        setEditingRent(null);
       }
     } catch (err) {
       console.log(err);
-      toast.error("Failed to update request");
+      toast.error("Failed to update rent post");
     }
   };
 
+  // 🔹 Loading & Empty states
   if (loading)
-    return (
-      <div className="text-center mt-20 text-gray-500">Loading...</div>
-    );
+    return <div className="text-center mt-20 text-gray-500">Loading...</div>;
 
-  if (requests.length === 0)
+  if (rents.length === 0)
     return (
       <div className="text-center mt-20 text-gray-500">
-        You haven’t posted any service requests yet.
+        You haven’t posted any rental items yet.
       </div>
     );
 
+  // 🔹 UI
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
       <h2 className="text-2xl font-bold text-center text-[#0fb894] mb-6">
-        My Service Requests
+        My Rental Posts
       </h2>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {requests.map((req) => (
+        {rents.map((rent) => (
           <div
-            key={req._id}
+            key={rent._id}
             className="border rounded-xl p-4 shadow-sm hover:shadow-md transition"
           >
-            {editingRequest === req._id ? (
+            {editingRent === rent._id ? (
               <div>
+                <input
+                  type="text"
+                  name="itemName"
+                  value={editForm.itemName}
+                  onChange={handleChange}
+                  className="input input-bordered w-full mb-2"
+                  placeholder="Item Name"
+                />
                 <textarea
                   name="description"
                   value={editForm.description}
                   onChange={handleChange}
                   className="textarea textarea-bordered w-full mb-2"
+                  placeholder="Description"
                 />
                 <input
-                  type="text"
-                  name="urgency"
-                  value={editForm.urgency}
+                  type="number"
+                  name="rentPrice"
+                  value={editForm.rentPrice}
                   onChange={handleChange}
                   className="input input-bordered w-full mb-2"
+                  placeholder="Rent Price"
                 />
                 <button
-                  onClick={() => handleSaveEdit(req._id)}
+                  onClick={() => handleSaveEdit(rent._id)}
                   className="btn btn-sm bg-[#0fb894] text-white w-full"
                 >
                   Save
@@ -133,25 +144,27 @@ const MyServiceRequest = () => {
             ) : (
               <>
                 <h3 className="font-semibold text-lg text-[#0fb894]">
-                  {req.requestTitle}
+                  {rent.itemName}
                 </h3>
-                <p className="text-sm text-gray-600 mt-1">{req.description}</p>
+                <p className="text-sm text-gray-600 mt-1">
+                  {rent.description}
+                </p>
                 <p className="text-sm text-gray-500 mt-2">
-                  📍 {req.district}, {req.upazila}
+                  📍 {rent.district}, {rent.upazila}
                 </p>
                 <p className="text-sm mt-1 text-gray-500">
-                  ☎️ {req.contact} | ⏱️ {req.urgency || "N/A"}
+                  💰 ৳{rent.rentPrice} / day
                 </p>
 
                 <div className="flex gap-2 mt-3">
                   <button
-                    onClick={() => handleEditClick(req)}
+                    onClick={() => handleEditClick(rent)}
                     className="btn btn-sm bg-blue-500 text-white flex-1"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(req._id)}
+                    onClick={() => handleDelete(rent._id)}
                     className="btn btn-sm bg-red-500 text-white flex-1"
                   >
                     Delete
@@ -166,4 +179,4 @@ const MyServiceRequest = () => {
   );
 };
 
-export default MyServiceRequest;
+export default MyItemRental;

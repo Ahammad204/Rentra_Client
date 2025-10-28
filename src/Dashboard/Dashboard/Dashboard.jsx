@@ -94,6 +94,12 @@ const Dashboard = () => {
               My services Request
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/myrentalItem">
+              <FaHome></FaHome>
+              My Rental Item
+            </NavLink>
+          </li>
 
           
           <li>

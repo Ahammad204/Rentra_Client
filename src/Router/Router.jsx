@@ -11,6 +11,7 @@ import CreateServiceRequest from "@/Dashboard/CreateServiceRequest/CreateService
 import CreateRentPost from "@/Dashboard/CreateRentPost/CreateRentPost";
 import MyService from "@/Dashboard/MyService/MyService";
 import MyServiceRequest from "@/Dashboard/MyServiceRequest/MyServiceRequest";
+import MyItemRental from "@/Dashboard/MyItemRental/MyItemRental";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       ,{
         path:"/dashboard/myserviceRequest",
         element: <PrivateRoute><MyServiceRequest></MyServiceRequest></PrivateRoute>
+      }
+      ,{
+        path:"/dashboard/myrentalItem",
+        element: <PrivateRoute><MyItemRental></MyItemRental></PrivateRoute>
       }
     ]
   }
