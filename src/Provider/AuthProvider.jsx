@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-   // 🔁 Fetch user (reusable)
+   //  Fetch user (reusable)
   const fetchUser = async () => {
     try {
       const res = await axiosPublic.get("/api/me", {

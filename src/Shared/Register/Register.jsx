@@ -107,7 +107,7 @@ const Register = () => {
         phone,
         passwordHash: password, // backend will hash it
         avatarUrl,
-        roles: ["user"],
+        roles: "user",
         bloodGroup,
         status: "active",
         ratingAvg: 0,

@@ -1,23 +1,25 @@
+import useAdmin from "@/Hooks/useAdmin";
 import useAuth from "@/Hooks/useAuth";
-import { FaHandHoldingMedical, FaHome } from "react-icons/fa";
+import Loading from "@/Shared/Loading/Loading";
+import { FaHandHoldingMedical, FaHome, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 
 
 const Dashboard = () => {
 
-
+const [isAdmin, isAdminLoading] = useAdmin();
   const { user } = useAuth();
 
-//   if(isAdminLoading || isVolunteerLoading){
-//     return <Loading></Loading>
-//   }
+  if(isAdminLoading ){
+    return <Loading></Loading>
+  }
 
   return (
     <div className="md:flex">
       {/* dashboard side bar */}
       <div className="md:w-64 min-h-screen  bg-[#0fb894] text-white">
         <ul className="menu p-4">
-          {/* {isAdmin ? (
+          {isAdmin ? (
             <>
                <li ><NavLink className=" mb-3 flex justify-center text-center w-full"  to="/dashboard/admin">Admin Home</NavLink></li>
               <hr />
@@ -27,52 +29,14 @@ const Dashboard = () => {
                   All Users
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/dashboard/all-blood-donation-request">
-                  <FaHandHoldingUsd></FaHandHoldingUsd>
-                  All Blood Donation Request
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/content-management">
-                  <FaHandHoldingUsd></FaHandHoldingUsd>
-                  Content Management
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/content-management/add-blog">
-                  <FaHandHoldingUsd></FaHandHoldingUsd>
-                  Add Blog
-                </NavLink>
-              </li>
+            
               <div className="divider"></div>
             </>
           ) : (
             <></>
           )}
-             {isAdmin || isVolunteer ? (
-            <>
-               <li ><NavLink className=" mb-3 flex justify-center text-center w-full"  to="/dashboard/volunteer">Volunteer Home</NavLink></li>
-              <hr />
-              <li>
-                <NavLink to="/dashboard/all-blood-donation-request">
-                  <FaHandHoldingUsd></FaHandHoldingUsd>
-                  All Blood Donation Request
-                </NavLink>
-              </li>
-                <li>
-                <NavLink to="/dashboard/content-management">
-                  <FaHandHoldingUsd></FaHandHoldingUsd>
-                  Content Management
-                </NavLink>
-              </li>
-              
-              <div className="divider"></div>
-            </>
-          ) : (
-            <></>
-          )}
-           */}
+       
+          
           {/* shared nav links */}
           <li ><NavLink className=" mb-3 flex justify-center text-center w-full"  to="/dashboard">Home</NavLink></li>
           <hr />

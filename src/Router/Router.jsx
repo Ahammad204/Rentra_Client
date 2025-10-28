@@ -12,6 +12,8 @@ import CreateRentPost from "@/Dashboard/CreateRentPost/CreateRentPost";
 import MyService from "@/Dashboard/MyService/MyService";
 import MyServiceRequest from "@/Dashboard/MyServiceRequest/MyServiceRequest";
 import MyItemRental from "@/Dashboard/MyItemRental/MyItemRental";
+import AdminRoute from "./AdminRoute";
+import AllUsers from "@/Dashboard/AllUsers/AllUsers";
 
 export const router = createBrowserRouter([
   {
@@ -57,6 +59,10 @@ export const router = createBrowserRouter([
       ,{
         path:"/dashboard/myrentalItem",
         element: <PrivateRoute><MyItemRental></MyItemRental></PrivateRoute>
+      }
+      ,{
+        path:"/dashboard/users",
+        element: <PrivateRoute><AdminRoute><AllUsers></AllUsers></AdminRoute></PrivateRoute>
       }
     ]
   }
