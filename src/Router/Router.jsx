@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import CreateService from "@/Dashboard/CreateService/CreateService";
 import CreateServiceRequest from "@/Dashboard/CreateServiceRequest/CreateServiceRequest";
 import CreateRentPost from "@/Dashboard/CreateRentPost/CreateRentPost";
+import MyService from "@/Dashboard/MyService/MyService";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       },{
         path:"/dashboard/rentPost",
         element: <PrivateRoute><CreateRentPost></CreateRentPost></PrivateRoute>
+      }
+      ,{
+        path:"/dashboard/myservice",
+        element: <PrivateRoute><MyService></MyService></PrivateRoute>
       }
     ]
   }

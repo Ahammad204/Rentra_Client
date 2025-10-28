@@ -82,6 +82,12 @@ const Dashboard = () => {
               Home
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/myservice">
+              <FaHome></FaHome>
+              My services
+            </NavLink>
+          </li>
 
           
           <li>
