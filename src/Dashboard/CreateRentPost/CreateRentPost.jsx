@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axiosPublic from "@/utils/axiosPublic";
 import useAuth from "@/Hooks/useAuth";
 
-const CreateServiceRequest = () => {
+const CreateRentPost = () => {
   const { user } = useAuth();
 
   const [districts, setDistricts] = useState([]);
@@ -12,24 +11,26 @@ const CreateServiceRequest = () => {
   const [selectedDistrictId, setSelectedDistrictId] = useState("");
 
   const [formData, setFormData] = useState({
-    requestTitle: "",
+    itemName: "",
+    category: "",
     description: "",
+    rentPrice: "",
     district: "",
     upazila: "",
     contact: user?.phone || "",
-    urgency: "",
+    availability: "",
   });
 
-  const serviceOptions = [
-    "Rider",
-    "Househelp",
-    "Doctor",
-    "Teaching",
-    "Plumber",
-    "Electrician",
-    "Cleaner",
-    "Carpenter",
-    "Delivery",
+  const categories = [
+    "Car",
+    "Bike",
+    "CNG",
+    "Camera",
+    "Grass Cutter",
+    "Projector",
+    "Furniture",
+    "Electronics",
+    "Other",
   ];
 
   // Fetch districts
@@ -52,7 +53,7 @@ const CreateServiceRequest = () => {
       .catch((err) => console.error("Error fetching upazilas:", err));
   }, [selectedDistrictId]);
 
-  // Handle form changes
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -62,13 +63,13 @@ const CreateServiceRequest = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.requestTitle || !formData.description) {
-      toast.error("Please fill required fields");
+    if (!formData.itemName || !formData.description || !formData.category || !formData.rentPrice) {
+      toast.error("Please fill all required fields");
       return;
     }
 
     try {
-      const res = await axiosPublic.post("/api/requests", {
+      const res = await axiosPublic.post("/api/rents", {
         ...formData,
         userId: user._id,
         userName: user.name,
@@ -77,18 +78,20 @@ const CreateServiceRequest = () => {
       });
 
       if (res.status === 201) {
-        toast.success("Service request created successfully!");
+        toast.success("Rent post created successfully!");
         setFormData({
-          requestTitle: "",
+          itemName: "",
+          category: "",
           description: "",
+          rentPrice: "",
           district: "",
           upazila: "",
           contact: user?.phone || "",
-          urgency: "",
+          availability: "",
         });
       }
     } catch (err) {
-      toast.error("Failed to create service request");
+      toast.error("Failed to create rent post");
       console.error(err);
     }
   };
@@ -96,22 +99,33 @@ const CreateServiceRequest = () => {
   return (
     <div className="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-2xl p-8">
       <h2 className="text-2xl font-bold text-center text-[#0fb894] mb-6">
-        Request a Service
+        Post an Item for Rent
       </h2>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        {/* Service Type */}
+        {/* Item Name */}
+        <input
+          type="text"
+          name="itemName"
+          value={formData.itemName}
+          onChange={handleChange}
+          placeholder="Item Name (e.g., Car, Bike)"
+          className="input input-bordered w-full"
+          required
+        />
+
+        {/* Category */}
         <select
-          name="requestTitle"
-          value={formData.requestTitle}
+          name="category"
+          value={formData.category}
           onChange={handleChange}
           className="select select-bordered w-full"
           required
         >
-          <option value="">Select Service You Need</option>
-          {serviceOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          <option value="">Select Category</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
             </option>
           ))}
         </select>
@@ -121,13 +135,24 @@ const CreateServiceRequest = () => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Describe your request in detail..."
+          placeholder="Describe your item and rental terms..."
           className="textarea textarea-bordered w-full"
           rows={5}
           required
         />
 
-        {/* Location */}
+        {/* Rent Price */}
+        <input
+          type="number"
+          name="rentPrice"
+          value={formData.rentPrice}
+          onChange={handleChange}
+          placeholder="Rent Price (per day)"
+          className="input input-bordered w-full"
+          required
+        />
+
+        {/* Location Selection */}
         <select
           name="district"
           value={formData.district}
@@ -162,7 +187,7 @@ const CreateServiceRequest = () => {
 
         {/* Contact */}
         <input
-          type="tel"
+          type="text"
           name="contact"
           value={formData.contact}
           onChange={handleChange}
@@ -170,26 +195,26 @@ const CreateServiceRequest = () => {
           className="input input-bordered w-full"
         />
 
-        {/* Urgency */}
+        {/* Availability */}
         <input
           type="text"
-          name="urgency"
-          value={formData.urgency}
+          name="availability"
+          value={formData.availability}
           onChange={handleChange}
-          placeholder="Urgency (e.g., Immediate, Within 24h)"
+          placeholder="Availability (e.g., 9AM - 6PM)"
           className="input input-bordered w-full"
         />
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           className="btn w-full bg-[#0fb894] text-white hover:bg-[#0ca885]"
         >
-          Post Request
+          Post Rent Item
         </button>
       </form>
     </div>
   );
 };
 
-export default CreateServiceRequest;
+export default CreateRentPost;

@@ -96,6 +96,12 @@ const Dashboard = () => {
               Create Service Request
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/dashboard/rentPost">
+              <FaHandHoldingMedical />
+              Create Item rent post
+            </NavLink>
+          </li>
          
         </ul>
       </div>

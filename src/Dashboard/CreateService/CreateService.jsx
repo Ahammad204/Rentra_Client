@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import axiosPublic from "@/utils/axiosPublic";
