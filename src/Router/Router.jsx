@@ -19,6 +19,10 @@ import AllServicesRequest from "@/Dashboard/AllServicesRequest/AllServicesReques
 import AllRentItem from "@/Dashboard/AllRentItem/AllRentItem";
 import AllJobs from "@/pages/AllJobs/AllJobs";
 import AllJobsDetails from "@/pages/AllJobsDetails/AllJobsDetails";
+import AllJobsRequest from "@/pages/AllJobsRequest/AllJobsRequest";
+import AllJobsRequestDetails from "@/pages/AllJobsRequestDetails/AllJobsRequestDetails";
+import AllRentalItem from "@/pages/AllRentalItem/AllRentalItem";
+import AllItemRentalDetails from "@/pages/AllItemRentalDetails/AllItemRentalDetails";
 
 export const router = createBrowserRouter([
   {
@@ -41,6 +45,20 @@ export const router = createBrowserRouter([
         },{
           path: "/service-details/:id",
           element: <AllJobsDetails></AllJobsDetails>
+        }
+        ,{
+          path:"/allJobsRequest",
+          element: <AllJobsRequest></AllJobsRequest>
+        }
+        ,{
+          path:"/request-details/:id",
+          element: <AllJobsRequestDetails></AllJobsRequestDetails>
+        },{
+          path:"/itemRent",
+          element: <AllRentalItem></AllRentalItem>
+        },{
+          path:"/rental-details/:id",
+          element: <AllItemRentalDetails></AllItemRentalDetails>
         }
     ]
   },{
